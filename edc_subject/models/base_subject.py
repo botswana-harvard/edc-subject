@@ -1,5 +1,5 @@
-import uuid
 import re
+from uuid import uuid4
 
 from edc_base.model.models import BaseUuidModel
 
@@ -123,7 +123,7 @@ class BaseSubject (BaseUuidModel):
 
         # set to uuid if new and not specified
         if not self.id:
-            subject_identifier_as_pk = str(uuid())
+            subject_identifier_as_pk = str(uuid4())
             self.subject_identifier_as_pk = subject_identifier_as_pk  # this will never change
         # never allow subject_identifier_as_pk as None
         if not self.subject_identifier_as_pk:

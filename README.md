@@ -1,2 +1,2 @@
 # edc-subject
-Base classes for subjects
+Base classes for research subjects

@@ -217,7 +217,7 @@ class BaseSubject (BaseUuidModel):
 #     def __unicode__(self):
 #         return "{0} {1}".format(self.mask_unset_subject_identifier(), self.subject_type)
 #
-#     
+#
 #
 #     def mask_unset_subject_identifier(self):
 #         subject_identifier = self.subject_identifier
@@ -269,7 +269,6 @@ class BaseSubject (BaseUuidModel):
 #         """Users may override to add an additional strategy to detect duplicate identifiers."""
 #         pass
 #
-
 
     class Meta:
         abstract = True

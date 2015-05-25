@@ -1,4 +1,3 @@
-import re
 from uuid import uuid4
 
 from edc_base.model.models import BaseUuidModel
@@ -270,7 +269,7 @@ class BaseSubject (BaseUuidModel):
 #         """Users may override to add an additional strategy to detect duplicate identifiers."""
 #         pass
 #
-#     
+
 
     class Meta:
         abstract = True

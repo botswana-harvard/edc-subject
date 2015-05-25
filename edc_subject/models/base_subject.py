@@ -1,3 +1,4 @@
+import uuid
 import re
 
 from edc_base.model.models import BaseUuidModel
@@ -10,6 +11,7 @@ from edc_base.model.fields import IsDateEstimatedField
 from edc_base.model.validators import dob_not_future, MinConsentAge, MaxConsentAge
 from edc_constants.choices import GENDER_UNDETERMINED
 
+from ..exceptions import SubjectError
 from ..managers import BaseSubjectManager
 
 
@@ -112,7 +114,7 @@ class BaseSubject (BaseUuidModel):
 
     def natural_key(self):
         return (self.subject_identifier_as_pk, )
-    
+
     def insert_dummy_identifier(self):
         """Inserts a random uuid as a dummy identifier for a new instance.
 
@@ -121,17 +123,11 @@ class BaseSubject (BaseUuidModel):
 
         # set to uuid if new and not specified
         if not self.id:
-            subject_identifier_as_pk = str(uuid4())
+            subject_identifier_as_pk = str(uuid())
             self.subject_identifier_as_pk = subject_identifier_as_pk  # this will never change
-            if not self.subject_identifier:
-                # this will be changed when allocated a subject_identifier on consent
-                self.subject_identifier = subject_identifier_as_pk
-        # never allow subject_identifier as None
-        if not self.subject_identifier:
-            raise ConsentError('Subject Identifier may not be left blank.')
         # never allow subject_identifier_as_pk as None
         if not self.subject_identifier_as_pk:
-            raise ConsentError('Attribute subject_identifier_as_pk on model '
+            raise SubjectError('Attribute subject_identifier_as_pk on model '
                                '{0} may not be left blank. Expected to be set '
                                'to a uuid already.'.format(self._meta.object_name))
 

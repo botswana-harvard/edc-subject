@@ -129,7 +129,6 @@ class BaseSubject (BaseUuidModel):
         return self.subject_type
 
     def save(self, *args, **kwargs):
-        using = kwargs.get('using')
         self.subject_type = self.get_subject_type()
         self.insert_dummy_identifier()
         super(BaseSubject, self).save(*args, **kwargs)

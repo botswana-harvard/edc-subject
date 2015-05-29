@@ -10,7 +10,7 @@ from edc_base.model.fields import IsDateEstimatedField
 from edc_base.model.validators import dob_not_future, MinConsentAge, MaxConsentAge
 from edc_constants.choices import GENDER_UNDETERMINED
 
-from ..exceptions import SubjectError
+from ..exceptions import SubjectRegistrationError
 from ..managers import BaseSubjectManager
 
 
@@ -115,9 +115,11 @@ class BaseSubject (BaseUuidModel):
             self.subject_identifier_as_pk = subject_identifier_as_pk  # this will never change
         # never allow subject_identifier_as_pk as None
         if not self.subject_identifier_as_pk:
-            raise SubjectError('Attribute subject_identifier_as_pk on model '
-                               '{0} may not be left blank. Expected to be set '
-                               'to a uuid already.'.format(self._meta.object_name))
+            raise SubjectRegistrationError(
+                'Attribute subject_identifier_as_pk on model '
+                '{0} may not be left blank. Expected to be set '
+                'to a uuid already.'.format(self._meta.object_name)
+            )
 
     def get_subject_type(self):
         """Returns a subject type.
@@ -131,7 +133,7 @@ class BaseSubject (BaseUuidModel):
     def save(self, *args, **kwargs):
         self.subject_type = self.get_subject_type()
         self.insert_dummy_identifier()
-        super(BaseSubject, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True

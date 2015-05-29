@@ -1,2 +1,0 @@
-class SubjectError(Exception):
-    pass

@@ -1,4 +1,1 @@
-
-
-class SubjectRegistrationError(Exception):
-    pass
+from .base_subject import BaseSubject

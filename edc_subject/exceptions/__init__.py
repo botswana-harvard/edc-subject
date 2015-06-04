@@ -1,1 +1,4 @@
-from .subject_exception import SubjectError
+
+
+class SubjectRegistrationError(Exception):
+    pass

@@ -3,11 +3,12 @@ from uuid import uuid4
 from edc_base.model.models import BaseUuidModel
 
 from django.core.validators import RegexValidator
+from django.conf import settings
 from django.db import models
 from django_crypto_fields.fields import FirstnameField, LastnameField, EncryptedCharField
 
 from edc_base.model.fields import IsDateEstimatedField
-from edc_base.model.validators import dob_not_future, MinConsentAge, MaxConsentAge
+from edc_base.model.validators import dob_not_future, MinConsentAgeValidator, MaxConsentAgeValidator
 from edc_constants.choices import GENDER_UNDETERMINED
 
 from ..managers import BaseSubjectManager
@@ -66,8 +67,8 @@ class BaseSubject (BaseUuidModel):
         verbose_name="Date of birth",
         validators=[
             dob_not_future,
-            MinConsentAge,
-            MaxConsentAge,
+            MinConsentAgeValidator(settings.MINIMUM_AGE_OF_CONSENT),
+            MaxConsentAgeValidator(settings.MAXIMUM_AGE_OF_CONSENT),
         ],
         null=True,
         blank=False,

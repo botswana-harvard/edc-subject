@@ -3,3 +3,8 @@
 
 # edc-subject
 Base classes for research subjects
+
+Add to settings:
+
+	MINIMUM_AGE_OF_CONSENT = 18
+	MAXIMUM_AGE_OF_CONSENT = 64
